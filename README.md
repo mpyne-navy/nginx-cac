@@ -50,7 +50,7 @@ With "real" CAC sites already working, testing for me as a matter of going to
 mapped to the guest's port 443).
 
 I believe at this point it should already ask for the CAC PIN (as part of SSL
-mutual auth) and then show an error page that the site is untrsted.
+mutual auth) and then show an error page that the site is untrusted.
 
 After confirming a security exception for the NGINX server's self-signed
 certificate (I made it a temporary exception but permanent should work as
