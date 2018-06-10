@@ -59,6 +59,20 @@ well), Firefox reloaded the page and this time you should see "It works!".
 If you look into the Developer Tools you should also see that NGINX has sent
 back your Subject Name information as a server response header.
 
+## Windows Testing
+
+I've also tested exporting the created Docker image (using
+`docker save nginx-cac:latest | gzip > nginx-cac.tar.gz`
+on the Linux host and using `docker load` on a Win10 machine to import the
+image).
+
+The container ran fine on Windows and I was also able to test with Firefox,
+Chrome, and Microsoft Edge (with success on all 3).
+
+As with Linux, you need to make sure you've setup your smartcard infrastructure
+(in my case I used OpenSC with Firefox) and that you've installed the DoD root
+and intermediate certificates into each browser.
+
 # Shutdown
 
 Don't forget to shutdown the Docker container when you're done (Use `docker ps`
