@@ -59,6 +59,12 @@ well), Firefox reloaded the page and this time you should see "It works!".
 If you look into the Developer Tools you should also see that NGINX has sent
 back your Subject Name information as a server response header.
 
+# Shutdown
+
+Don't forget to shutdown the Docker container when you're done (Use `docker ps`
+to find the short name of the running container and then `docker stop
+$short-name` from there).
+
 # Why?????
 
 Because doing this all within DoD is so much harder than doing it in my off
