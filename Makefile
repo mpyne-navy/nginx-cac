@@ -1,6 +1,6 @@
 .PHONY: all run cert clean
 
-all: cert
+all: cert DoDRoots.crt
 	docker build -t nginx-cac:latest .
 
 run:
