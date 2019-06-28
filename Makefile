@@ -21,21 +21,24 @@ key.pem:
 clean:
 	@rm -f key.pem certificate.pem
 
-# See https://iase.disa.mil/pki-pke/getting_started/Pages/administrators.aspx for instructions
-# on how to obtain DoD PKI certs -- which are *not* CAC-firewalled. The ZIP file they link you to
-# includes the raw DoD Root certs in various formats. This Makefile just picks out the 3 current
-# root certs and concatenates them into a single file. Worked for me as of 2018-06-09
-#
-# unzip -p is used to dump directly to stdout, tr -d converts text to Unix format
-ROOT_CERTS := Certificates_PKCS7_v5.0u1_DoD
-DoDRoots.crt: $(ROOT_CERTS).zip
-	unzip -p "$<" '$(ROOT_CERTS)/DoD_Root_CA_[234]*.cer' | tr -d '\15\32' > "$@"
+# See https://public.cyber.mil/pki-pke/pkipke-document-library/?_dl_facet_pkipke_type=popular-dod-certs
+# for instructions on how to obtain DoD PKI certs -- which are *not*
+# CAC-firewalled. The ZIP file they link you to includes the raw DoD Root certs
+# in various formats.
 
-# ***NOTE*** the DISA IASE website appears to use http instead of https for the
-# link to the ZIP file so if you care about security (and you should), make
-# sure to manually turn it back into an HTTPS link.
-#
-# As of 2018-06-09 this worked
-# https://iasecontent.disa.mil/pki-pke/Certificates_PKCS7_v5.0u1_DoD.zip
-$(ROOT_CERTS).zip:
-	curl -s -o "$@" "https://iasecontent.disa.mil/pki-pke/$@"
+# File name format *inside* the ZIP file
+ROOT_CERTS := Certificates_PKCS7_v5.6_DoD
+
+# Format of the ZIP file name itself
+ROOT_CERTS_FILE_NAME := $(shell echo $(ROOT_CERTS) | tr A-Z. a-z- )
+
+# Current versions of the DoD PKI distro contain all the certs in a pkcs7 bundle,
+# which NGINX doesn't handle natively, but is not too difficult to have openssl
+# convert into a bunch of concatenated individual PEM-format certs.
+# unzip -p is used to dump directly to stdout
+DoDRoots.crt: $(ROOT_CERTS_FILE_NAME).zip
+	unzip -p "$<" '$(ROOT_CERTS)/$(ROOT_CERTS).pem.p7b' | openssl pkcs7 -out "$@" -print_certs
+
+# As of 2019-06-27 this worked
+$(ROOT_CERTS_FILE_NAME).zip:
+	curl -s -o "$@" "https://dl.dod.cyber.mil/wp-content/uploads/pki-pke/zip/$@"
