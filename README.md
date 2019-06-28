@@ -45,7 +45,7 @@ In my case I had Firefox already configured to be able to authenticate against
 CAC-enabled websites, using PCSC Lite, the CACKey middleware, and by installing
 the DoD root certs **and intermediate CA certs** into the NSS keystore.
 
-With "real" CAC sites already working, testing for me as a matter of going to
+With "real" CAC sites already working, testing for me was a matter of going to
 `https://localhost:$PORT/` (replacing `$PORT` with the actual port on the host
 mapped to the guest's port 443).
 
