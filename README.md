@@ -1,16 +1,19 @@
 # Introduction
 
-This is the barest possible NGINX configuration and Docker infrastructure I
-could create that would enable developing a Web site that is protected using
-client TLS using the DoD public key infrastructure (PKI).
+This is the barest possible NGINX configuration and
+[Docker](https://www.docker.com/) infrastructure I could create that would
+enable developing a Web site that is protected using [client
+TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security#Client-authenticated_TLS_handshake)
+using the [DoD public key infrastructure
+(PKI)](https://public.cyber.mil/pki-pke/admins/).
 
-In other words, you can build web sites using NGINX as the SSL terminator that
-are CAC-protected starting from this as a baseline.
+In other words, you can build CAC-protected web sites using NGINX as the SSL
+termination point, starting from this baseline.
 
 # Building
 
 You should be on Linux, with the normal command line toolchain (shell,
-coreutils, etc.), along with curl and zip.
+coreutils, etc.), along with curl, openssl and zip.
 
 Of course, you'll need Docker installed as well to actually build the Docker
 image and launch new containers.
@@ -21,9 +24,12 @@ This will:
 
 * Download the base Docker image (alpine),
 * Generate a new self-signed SSL cert,
-* Download the DoD root certs and wrap them into a single file (to serve as the
-  client TLS trusted CA in NGINX),
-* Install the new client CA and new cert into the Docker image,
+* Download the [DoD root
+  certs](https://public.cyber.mil/pki-pke/pkipke-document-library/?_dl_facet_pkipke_type=popular-dod-certs)
+  and wrap them into a single file (to serve as the trusted set of certificates
+  that can sign certificates presented by the CAC-holding client during TLS
+  session negotiation),
+* Install the new client CA and the new self-signed cert into the Docker image,
 * Install nginx and a simple config into the Docker image, along with a sample
   index.html.
 
