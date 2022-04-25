@@ -27,10 +27,11 @@ clean:
 # in various formats.
 
 # File name format *inside* the ZIP file
-ROOT_CERTS := Certificates_PKCS7_v5.6_DoD
+ROOT_CERTS := Certificates_PKCS7_v5.9_DoD
 
 # Format of the ZIP file name itself
-ROOT_CERTS_FILE_NAME := $(shell echo $(ROOT_CERTS) | tr A-Z. a-z- )
+ROOT_CERTS_FILE_NAME := certificates_pkcs7_DoD
+#ROOT_CERTS_FILE_NAME := $(shell echo $(ROOT_CERTS) | tr A-Z. a-z- )
 
 # Current versions of the DoD PKI distro contain all the certs in a pkcs7 bundle,
 # which NGINX doesn't handle natively, but is not too difficult to have openssl
