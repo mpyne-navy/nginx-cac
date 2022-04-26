@@ -26,9 +26,9 @@ RUN apk update && apk add nginx && mkdir -p /run/nginx /www/data
 COPY certificate.pem key.pem DoDRoots.crt /etc/nginx/
 
 # Provided in this Docker package, and relatively simple configs
-COPY default.conf /etc/nginx/conf.d/default.conf
+COPY default.conf /etc/nginx/http.d/default.conf
 COPY index.html   /www/data/index.html
 
 EXPOSE 443/tcp
 
-ENTRYPOINT ["/usr/sbin/nginx", "-q", "-g", "daemon off;"]
+ENTRYPOINT ["/usr/sbin/nginx", "-g", "daemon off;"]
