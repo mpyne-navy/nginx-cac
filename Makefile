@@ -41,5 +41,6 @@ DoDRoots.crt: $(ROOT_CERTS_FILE_NAME).zip
 	unzip -p "$<" '$(ROOT_CERTS)/$(ROOT_CERTS).pem.p7b' | openssl pkcs7 -out "$@" -print_certs
 
 # As of 2019-06-27 this worked
+# As of 2022-04-25 this still works
 $(ROOT_CERTS_FILE_NAME).zip:
 	curl -s -o "$@" "https://dl.dod.cyber.mil/wp-content/uploads/pki-pke/zip/$@"
